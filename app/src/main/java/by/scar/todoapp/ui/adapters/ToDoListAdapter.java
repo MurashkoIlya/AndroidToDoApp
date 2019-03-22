@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import by.scar.todoapp.R;
 import by.scar.todoapp.model.ToDo;
 
-//TODO:Complete Adapter and ViewHolder
+//TODO:Complete Adapter and ToDoViewHolder
 
-public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ViewHolder> {
+public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ToDoViewHolder> {
     private List<ToDo> mToDoList;
 
     public ToDoListAdapter(List<ToDo> toDoList){
@@ -26,12 +26,13 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ViewHo
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_todo, parent, false));
+    public ToDoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_todo, parent, false);
+        return new ToDoViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ToDoViewHolder holder, int position) {
         final ToDo todo = mToDoList.get(position);
 
         holder.onBind(todo);
@@ -46,14 +47,14 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ViewHo
         return mToDoList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    class ToDoViewHolder extends RecyclerView.ViewHolder{
         private TextView title;
         private TextView body;
         private CheckBox isDone;
 
         private ToDo mTodo;
 
-        public ViewHolder(@NonNull View itemView) {
+        ToDoViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.add_item_title);
             body = itemView.findViewById(R.id.add_item_body);
