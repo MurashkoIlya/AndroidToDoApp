@@ -59,8 +59,8 @@ public class AddItemFragment extends BaseFragment {
     }
 
     private void findViews(View view){
-        title = view.findViewById(R.id.add_item_title);
-        body = view.findViewById(R.id.add_item_body);
+        title = view.findViewById(R.id.add_item_title_field);
+        body = view.findViewById(R.id.add_item_body_field);
         addItemBtn = view.findViewById(R.id.add_item_button);
     }
 

@@ -28,7 +28,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/fragment_standart_margin"
         android:layout_marginTop="@dimen/fragment_standart_margin"
-        android:layout_marginEnd="@dimen/fragment_standart_margin"/>
+        android:layout_marginEnd="@dimen/fragment_standart_margin"
+        android:clickable="false"
+        android:focusable="false"/>
 
     <View style="@style/Divider"/>
 

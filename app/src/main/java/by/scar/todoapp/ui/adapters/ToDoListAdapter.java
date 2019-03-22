@@ -38,10 +38,6 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ToDoVi
         holder.onBind(todo);
     }
 
-    public void setmToDoList(List<ToDo> toDoList){
-        mToDoList = toDoList;
-    }
-
     @Override
     public int getItemCount() {
         return mToDoList.size();
@@ -56,8 +52,8 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ToDoVi
 
         ToDoViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.add_item_title);
-            body = itemView.findViewById(R.id.add_item_body);
+            title = itemView.findViewById(R.id.item_body);
+            body = itemView.findViewById(R.id.item_title);
             isDone = itemView.findViewById(R.id.item_is_done);
         }
 

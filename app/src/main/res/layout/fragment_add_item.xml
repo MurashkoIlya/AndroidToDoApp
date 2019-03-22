@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/add_item_title"
+        android:id="@+id/add_item_title_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="text"
@@ -33,7 +33,7 @@
         android:layout_marginEnd="@dimen/fragment_standart_margin"/>
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/add_item_body"
+        android:id="@+id/add_item_body_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fragment_standart_margin"
@@ -41,7 +41,7 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_item_title"
+        app:layout_constraintTop_toBottomOf="@id/add_item_title_field"
         android:layout_marginStart="@dimen/fragment_standart_margin"
         android:layout_marginEnd="@dimen/fragment_standart_margin"/>
 
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="textStart"
         android:text="@string/add_item_btn_text"
-        app:layout_constraintTop_toBottomOf="@id/add_item_body"
+        app:layout_constraintTop_toBottomOf="@id/add_item_body_field"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/fragment_standart_margin"
