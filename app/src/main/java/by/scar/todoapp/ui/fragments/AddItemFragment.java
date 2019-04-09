@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.lang.ref.WeakReference;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
@@ -36,12 +38,6 @@ public class AddItemFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_item, container, false);
         findViews(view);
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
 
         addItemBtn.setOnClickListener(v->{
             if(isValid()){
@@ -56,6 +52,13 @@ public class AddItemFragment extends BaseFragment {
             }else Toast.makeText(getContext(), "Поля пусты!", Toast.LENGTH_SHORT).show();
         });
 
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        callback = null;
     }
 
     private void findViews(View view){
@@ -65,8 +68,8 @@ public class AddItemFragment extends BaseFragment {
     }
 
     private boolean isValid(){
-        if(title.getText().toString().trim().equals("") ||
-                body.getText().toString().trim().equals(""))
+        if(title.getText().toString().equals("") ||
+                body.getText().toString().equals(""))
             return false;
         else return true;
     }

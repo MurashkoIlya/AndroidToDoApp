@@ -22,15 +22,15 @@
         android:layout_marginTop="@dimen/fragment_standart_margin"
         android:layout_marginEnd="@dimen/fragment_standart_margin"/>
 
-    <androidx.appcompat.widget.AppCompatCheckBox
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/item_is_done"
+        android:text="@string/todo_in_progress_txt"
+        android:textColor="@color/itemInProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/fragment_standart_margin"
         android:layout_marginTop="@dimen/fragment_standart_margin"
-        android:layout_marginEnd="@dimen/fragment_standart_margin"
-        android:clickable="false"
-        android:focusable="false"/>
+        android:layout_marginEnd="@dimen/fragment_standart_margin"/>
 
     <View style="@style/Divider"/>
 

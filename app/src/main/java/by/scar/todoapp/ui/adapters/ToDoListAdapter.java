@@ -1,9 +1,9 @@
 package by.scar.todoapp.ui.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,11 +17,15 @@ import by.scar.todoapp.model.ToDo;
 //TODO:Complete Adapter and ToDoViewHolder
 
 public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ToDoViewHolder> {
+    private Context mContext;
     private List<ToDo> mToDoList;
+    private OnItemClickListener mOnItemClickListener;
 
-    public ToDoListAdapter(List<ToDo> toDoList){
+    public ToDoListAdapter(Context context, List<ToDo> toDoList, OnItemClickListener onItemClickListener){
+        mContext = context;
         mToDoList = new ArrayList<>();
         mToDoList.addAll(toDoList);
+        mOnItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -35,6 +39,8 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ToDoVi
     public void onBindViewHolder(@NonNull ToDoViewHolder holder, int position) {
         final ToDo todo = mToDoList.get(position);
 
+        holder.itemView.setOnClickListener(v -> mOnItemClickListener.onItemClick(todo));
+
         holder.onBind(todo);
     }
 
@@ -46,14 +52,14 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ToDoVi
     class ToDoViewHolder extends RecyclerView.ViewHolder{
         private TextView title;
         private TextView body;
-        private CheckBox isDone;
+        private TextView isDone;
 
         private ToDo mTodo;
 
         ToDoViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.item_body);
-            body = itemView.findViewById(R.id.item_title);
+            title = itemView.findViewById(R.id.item_title);
+            body = itemView.findViewById(R.id.item_body);
             isDone = itemView.findViewById(R.id.item_is_done);
         }
 
@@ -62,6 +68,19 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ToDoVi
 
             title.setText(mTodo.getTitle());
             body.setText(mTodo.getBody());
+            if(mTodo.isDone()){
+                isDone.setTextColor(mContext.getResources().getColor(R.color.itemDone));
+                isDone.setText(mContext.getResources().getText(R.string.todo_done_txt));
+            } else if(!mTodo.isDone()){
+                isDone.setText(mContext.getResources().getText(R.string.todo_in_progress_txt));
+                isDone.setTextColor(mContext.getResources().getColor(R.color.itemInProgress));
+            }
+
+            itemView.setOnClickListener(v-> mOnItemClickListener.onItemClick(todo));
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(ToDo todo);
     }
 }

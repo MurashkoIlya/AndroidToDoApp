@@ -3,25 +3,24 @@ package by.scar.todoapp.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.fragment.app.FragmentManager;
 import by.scar.todoapp.R;
 import by.scar.todoapp.ui.base.BaseActivity;
 import by.scar.todoapp.ui.fragments.AddItemFragment;
 import by.scar.todoapp.ui.fragments.HomeFragment;
+import by.scar.todoapp.ui.fragments.ItemDetalizationFragment;
 import by.scar.todoapp.ui.fragments.NotificationFragment;
 import by.scar.todoapp.ui.fragments.ToDoListFragment;
+import by.scar.todoapp.ui.fragments.base.BaseFragment;
 
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-//TODO:Bottom navigation
-
-public class MainActivity extends BaseActivity implements ToDoListFragment.OnAddItemClickCallback, AddItemFragment.OnCreateItemCallback {
+public class MainActivity extends BaseActivity implements ToDoListFragment.OnAddItemClickListener, AddItemFragment.OnCreateItemCallback, ToDoListFragment.OnItemClickListener, ItemDetalizationFragment.OnDeleteItemCallback {
 
     private TextView mLogOutText;
     private ImageButton mLogOutButton;
@@ -72,6 +71,11 @@ public class MainActivity extends BaseActivity implements ToDoListFragment.OnAdd
         finish();
     };
 
+    private void popBackStack(){
+        FragmentManager manager = getSupportFragmentManager();
+        manager.popBackStack();
+    }
+
     @Override
     public void onAddClick() {
         replaceFragmentInMainFrame(AddItemFragment.newInstance(), true);
@@ -79,8 +83,7 @@ public class MainActivity extends BaseActivity implements ToDoListFragment.OnAdd
 
     @Override
     public void onCreateItem() {
-        FragmentManager manager = getSupportFragmentManager();
-        manager.popBackStack();
+        popBackStack();
     }
 
     private void findViews(){
@@ -88,4 +91,13 @@ public class MainActivity extends BaseActivity implements ToDoListFragment.OnAdd
         mLogOutText = findViewById(R.id.logOut_text);
     }
 
+    @Override
+    public void onItemClick(long id) {
+        replaceFragmentInMainFrame(ItemDetalizationFragment.newInstance(id), true);
+    }
+
+    @Override
+    public void onDeleteItem() {
+        popBackStack();
+    }
 }

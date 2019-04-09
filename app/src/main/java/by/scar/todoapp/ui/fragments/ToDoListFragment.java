@@ -1,6 +1,5 @@
 package by.scar.todoapp.ui.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +8,7 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -26,14 +26,15 @@ public class ToDoListFragment extends BaseFragment {
     private FloatingActionButton addBTn;
     private TextView ntsTxt;
 
-    private OnAddItemClickCallback addItemClickCallback;
+    private OnAddItemClickListener addItemClickListener;
+    private OnItemClickListener onItemClickListener;
 
     private RecyclerView mRecycler;
 
     public static ToDoListFragment newInstance() {
-        
+
         Bundle args = new Bundle();
-        
+
         ToDoListFragment fragment = new ToDoListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -47,26 +48,47 @@ public class ToDoListFragment extends BaseFragment {
 
         mRecycler = view.findViewById(R.id.todo_list);
         mRecycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        mRecycler.setAdapter(new ToDoListAdapter(initItems(view.getContext())));
+
+        mRecycler.setAdapter(new ToDoListAdapter(view.getContext(),
+                initItems(),
+                todo->{
+            onItemClickListener = (MainActivity) getActivity();
+            onItemClickListener.onItemClick(todo.getId());
+        }));
+
+        addBTn.setOnClickListener(v->{
+            addItemClickListener = (MainActivity) getActivity();
+            addItemClickListener.onAddClick();
+        });
+
         return view;
     }
 
-    private List<ToDo> initItems(Context context){
-        return ObjectBoxHelper.getToDos();
-    }
-
     @Override
-    public void onStart() {
-        super.onStart();
-
-        addBTn.setOnClickListener(v->{
-            addItemClickCallback = (MainActivity) getActivity();
-            addItemClickCallback.onAddClick();
-        });
+    public void onDestroyView() {
+        super.onDestroyView();
+        addItemClickListener = null;
     }
 
-    public interface OnAddItemClickCallback{
+    private List<ToDo> initItems(){
+        List<ToDo> itemList = new ArrayList<>();
+        itemList.addAll(ObjectBoxHelper.getToDos());
+        if(itemList.isEmpty()) {
+            ntsTxt.setVisibility(View.VISIBLE);
+            return itemList;
+        }
+        else{
+            ntsTxt.setVisibility(View.INVISIBLE);
+            return itemList;
+        }
+    }
+
+    public interface OnAddItemClickListener {
         void onAddClick();
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(long id);
     }
 
     public void findViews(View view){

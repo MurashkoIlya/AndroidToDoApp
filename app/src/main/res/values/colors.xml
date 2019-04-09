@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="white">#FFFFFF</color>
+
+    <color name="itemDone">#8BC34A</color>
+    <color name="itemFailed">#F44336</color>
+    <color name="itemInProgress">#03A9F4</color>
 </resources>

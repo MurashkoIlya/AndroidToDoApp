@@ -26,6 +26,14 @@ public class ObjectBoxHelper {
         else return new ArrayList<>();
     }
 
+    public static ToDo getToDo(long id){
+        return (ToDo) getToDoBox().query().equal(ToDo_.id, id).build().findFirst();
+    }
+
+    public static void popToDo(ToDo entity){
+        getToDoBox().remove(entity);
+    }
+
     public static void putToDo(ToDo entity){
         getToDoBox().put(entity);
     }

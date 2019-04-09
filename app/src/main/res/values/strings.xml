@@ -14,4 +14,8 @@
     <string name="title_hint">Title</string>
     <string name="body_hint">Body</string>
     <string name="add_item_btn_text">Add item</string>
+
+    <string name="todo_done_txt">Done</string>
+    <string name="todo_in_progress_txt">In progress</string>
+    <string name="todo_failed_txt">Failed</string>
 </resources>
