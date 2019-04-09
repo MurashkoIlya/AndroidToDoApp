@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import by.scar.todoapp.R;
@@ -21,15 +19,19 @@ public class ItemDetalizationFragment extends BaseFragment {
     private static final String TAG = ItemDetalizationFragment.class.getName();
 
     public static final String ARG_ID = TAG + "ARG_ID";
+
     private ToDo todo;
 
-    private FloatingActionButton mDeleteButton;
+    private com.github.clans.fab.FloatingActionButton mDeleteButton;
+    private com.github.clans.fab.FloatingActionButton mEditButton;
+
 
     private TextView mTitle;
     private TextView mBody;
     private TextView isDone;
 
-    private OnDeleteItemCallback callback;
+    private OnDeleteItemCallback onDeleteItemCallback;
+    private OnEditItemCallback onEditItemCallback;
 
     public static ItemDetalizationFragment newInstance(long id) {
         ItemDetalizationFragment fragment = new ItemDetalizationFragment();
@@ -58,7 +60,7 @@ public class ItemDetalizationFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        callback = null;
+        onDeleteItemCallback = null;
     }
 
     private void initViews(View view){
@@ -66,6 +68,7 @@ public class ItemDetalizationFragment extends BaseFragment {
         mBody = view.findViewById(R.id.body_item_detalization);
         isDone = view.findViewById(R.id.item_is_done_detalization);
         mDeleteButton = view.findViewById(R.id.item_delete_action);
+        mEditButton = view.findViewById(R.id.item_edit_action);
     }
 
     private void setViews(ToDo todo, View view){
@@ -82,13 +85,21 @@ public class ItemDetalizationFragment extends BaseFragment {
 
         mDeleteButton.setOnClickListener(v-> {
             ObjectBoxHelper.popToDo(todo);
-            callback = (MainActivity) getActivity();
-            callback.onDeleteItem();
+            onDeleteItemCallback = (MainActivity) getActivity();
+            onDeleteItemCallback.onDeleteItem();
         });
 
+        mEditButton.setOnClickListener(v->{
+            onEditItemCallback = (MainActivity) getActivity();
+            onEditItemCallback.onEditItem(todo.getId());
+        });
     }
 
     public interface OnDeleteItemCallback{
         void onDeleteItem();
+    }
+
+    public interface OnEditItemCallback{
+        void onEditItem(long id);
     }
 }

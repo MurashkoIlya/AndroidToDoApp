@@ -20,7 +20,9 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class MainActivity extends BaseActivity implements ToDoListFragment.OnAddItemClickListener, AddItemFragment.OnCreateItemCallback, ToDoListFragment.OnItemClickListener, ItemDetalizationFragment.OnDeleteItemCallback {
+public class MainActivity extends BaseActivity implements ToDoListFragment.OnAddItemClickListener, AddItemFragment.OnCreateItemCallback,
+        ToDoListFragment.OnItemClickListener, ItemDetalizationFragment.OnDeleteItemCallback,
+        ItemDetalizationFragment.OnEditItemCallback {
 
     private TextView mLogOutText;
     private ImageButton mLogOutButton;
@@ -78,7 +80,7 @@ public class MainActivity extends BaseActivity implements ToDoListFragment.OnAdd
 
     @Override
     public void onAddClick() {
-        replaceFragmentInMainFrame(AddItemFragment.newInstance(), true);
+        replaceFragmentInMainFrame(AddItemFragment.newInstance(0), true);
     }
 
     @Override
@@ -99,5 +101,10 @@ public class MainActivity extends BaseActivity implements ToDoListFragment.OnAdd
     @Override
     public void onDeleteItem() {
         popBackStack();
+    }
+
+    @Override
+    public void onEditItem(long id) {
+        replaceFragmentInMainFrame(AddItemFragment.newInstance(id), true);
     }
 }
